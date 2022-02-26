@@ -24,18 +24,19 @@ public class Post implements Serializable {
     @Transient
     private int voteCount;
     private Integer userId;
+
     @NotNull
     @Temporal(TemporalType.DATE)
     @Column(name = "posted_at")
     private Date postedAt = new Date();
+
     @NotNull
     @Temporal(TemporalType.DATE)
     @Column(name = "updated_at")
     private Date updatedAt = new Date();
-    private List<Comment> comments;
 
-    public Post () {
-    }
+    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
     public Post(Integer id, String title, String postUrl, int voteCount, Integer userId) {
         this.id = id;
