@@ -4,7 +4,6 @@ import com.technews.model.Post;
 import com.technews.model.User;
 import com.technews.model.Vote;
 import com.technews.respository.PostRepository;
-import com.technews.respository.UserRepository;
 import com.technews.respository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +19,6 @@ public class PostController {
 
     @Autowired
     VoteRepository voteRepository;
-
-    @Autowired
-    UserRepository userRepository;
 
     @GetMapping("/api/posts")
     public List<Post> getAllPosts() {

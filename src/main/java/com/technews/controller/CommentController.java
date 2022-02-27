@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 public class CommentController {
+
     @Autowired
     CommentRepository repository;
 
@@ -23,7 +24,7 @@ public class CommentController {
         return repository.getById(id);
     }
 
-    @GetMapping("/api/comments")
+    @PostMapping("/api/comments")
     @ResponseStatus(HttpStatus.CREATED)
     public Comment createComment(@RequestBody Comment comment) {
         return repository.save(comment);
