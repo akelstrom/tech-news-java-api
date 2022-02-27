@@ -48,7 +48,7 @@ public class UserController {
         return user;
     }
 
-    @PutMapping("/api.users/{id}")
+    @PutMapping("/api/users/{id}")
     public User updateUser(@PathVariable int id, @RequestBody User user) {
         User tempUser = repository.getById(id);
 
