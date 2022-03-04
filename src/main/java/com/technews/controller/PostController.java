@@ -16,7 +16,6 @@ import java.util.List;
 public class PostController {
     @Autowired
     PostRepository repository;
-
     @Autowired
     VoteRepository voteRepository;
 

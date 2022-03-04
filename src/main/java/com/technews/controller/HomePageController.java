@@ -18,15 +18,13 @@ import java.util.List;
 
 @Controller
 public class HomePageController {
+
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     PostRepository postRepository;
-
     @Autowired
     VoteRepository voteRepository;
-
     @Autowired
     CommentRepository commentRepository;
 
