@@ -73,7 +73,7 @@
         </div>
 
         <div th:if="${post.voteCount == 1}" class="meta">
-            [[${post.voteCount}]] point by [[${post.userName}]] on
+            [[${post.voteCount}]] vote by [[${post.userName}]] on
             <span th:text="${#dates.format(post.postedAt, 'MM-dd-YY')}"></span>
 
             <a th:href="@{/post/{id}(id=${post.id})}" th:if="${post.comments.size() == 1}">[[${post.comments.size()}]]
@@ -82,7 +82,7 @@
                 comments</a>
         </div>
         <div th:unless="${post.voteCount == 1}" class="meta">
-            [[${post.voteCount}]] points by [[${post.userName}]] on
+            [[${post.voteCount}]] votes by [[${post.userName}]] on
             <span th:text="${#dates.format(post.postedAt, 'MM-dd-YY')}"></span>
             |
             <a th:href="@{/post/{id}(id=${post.id})}" th:if="${post.comments.size() == 1}">[[${post.comments.size()}]]

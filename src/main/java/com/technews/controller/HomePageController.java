@@ -54,6 +54,8 @@ public class HomePageController {
 
         if(request.getSession(false) != null) {
             sessionUser = (User) request.getSession().getAttribute("SESSION_USER");
+            model.addAttribute("loggedIn", sessionUser.isLoggedIn());
+        } else {
             model.addAttribute("loggedIn", false);
         }
 
@@ -74,7 +76,8 @@ public class HomePageController {
 
     @GetMapping("/dashboard")
     public String dashboardPageSetup(Model model, HttpServletRequest request) throws Exception {
-        if(request.getSession(false) != null) {
+
+        if (request.getSession(false) != null) {
             setupDashboardPage(model, request);
             return "dashboard";
         } else {
@@ -83,19 +86,21 @@ public class HomePageController {
         }
     }
 
-    @GetMapping("/dashboardEmptyTitleandLink")
+    @GetMapping("/dashboardEmptyTitleAndLink")
     public String dashboardEmptyTitleAndLinkHandler(Model model, HttpServletRequest request) throws Exception {
         setupDashboardPage(model, request);
         model.addAttribute("notice", "To create a post the Title and Link must be populated!");
         return "dashboard";
     }
 
+
     @GetMapping("/singlePostEmptyComment/{id}")
     public String singlePostEmptyCommentHandler(@PathVariable int id, Model model, HttpServletRequest request) {
         setupSinglePostPage(id, model, request);
-        model.addAttribute("notice", "To add a comment you must enter the comment in the text area!");
+        model.addAttribute("notice", "To add a comment you must enter the comment in the comment text area!");
         return "single-post";
     }
+
 
     @GetMapping("/post/{id}")
     public String singlePostPageSetup(@PathVariable int id, Model model, HttpServletRequest request) {
@@ -103,11 +108,12 @@ public class HomePageController {
         return "single-post";
     }
 
+
     @GetMapping("/editPostEmptyComment/{id}")
     public String editPostEmptyCommentHandler(@PathVariable int id, Model model, HttpServletRequest request) {
-        if(request.getSession(false) != null) {
+        if (request.getSession(false) != null) {
             setupEditPostPage(id, model, request);
-            model.addAttribute("notice", "To add a comment you must enter the comment in the comment text area !");
+            model.addAttribute("notice", "To add a comment you must enter the comment in the comment text area!");
             return "edit-post";
         } else {
             model.addAttribute("user", new User());
@@ -115,9 +121,10 @@ public class HomePageController {
         }
     }
 
+
     @GetMapping("/dashboard/edit/{id}")
     public String editPostPageSetup(@PathVariable int id, Model model, HttpServletRequest request) {
-        if(request.getSession(false) != null) {
+        if (request.getSession(false) != null) {
             setupEditPostPage(id, model, request);
             return "edit-post";
         } else {
@@ -125,6 +132,8 @@ public class HomePageController {
             return "login";
         }
     }
+
+
 
     public Model setupDashboardPage(Model model, HttpServletRequest request) throws Exception {
         User sessionUser = (User) request.getSession().getAttribute("SESSION_USER");
@@ -132,10 +141,10 @@ public class HomePageController {
         Integer userId = sessionUser.getId();
 
         List<Post> postList = postRepository.findAllPostsByUserId(userId);
-        for(Post post : postList) {
-            post.setVoteCount(voteRepository.countVotesByPostId(post.getId()));
-            User user = userRepository.getById(post.getUserId());
-            post.setUserName(user.getUsername());
+        for (Post p : postList) {
+            p.setVoteCount(voteRepository.countVotesByPostId(p.getId()));
+            User user = userRepository.getById(p.getUserId());
+            p.setUserName(user.getUsername());
         }
 
         model.addAttribute("user", sessionUser);
@@ -146,26 +155,30 @@ public class HomePageController {
         return model;
     }
 
+
     public Model setupSinglePostPage(int id, Model model, HttpServletRequest request) {
         if (request.getSession(false) != null) {
             User sessionUser = (User) request.getSession().getAttribute("SESSION_USER");
             model.addAttribute("sessionUser", sessionUser);
             model.addAttribute("loggedIn", sessionUser.isLoggedIn());
         }
-            Post post = postRepository.getById(id);
-            post.setVoteCount(voteRepository.countVotesByPostId(post.getId()));
 
-            User postUser = userRepository.getById(post.getUserId());
-            post.setUserName(postUser.getUsername());
+        Post post = postRepository.getById(id);
+        post.setVoteCount(voteRepository.countVotesByPostId(post.getId()));
 
-            List<Comment> commentList = commentRepository.findAllCommentsByPostId(post.getId());
+        User postUser = userRepository.getById(post.getUserId());
+        post.setUserName(postUser.getUsername());
 
-            model.addAttribute("post", post);
-            model.addAttribute("commentList", commentList);
-            model.addAttribute("comment", new Comment());
+        List<Comment> commentList = commentRepository.findAllCommentsByPostId(post.getId());
 
-            return model;
+        model.addAttribute("post", post);
+
+        model.addAttribute("commentList", commentList);
+        model.addAttribute("comment", new Comment());
+
+        return model;
     }
+
 
     public Model setupEditPostPage(int id, Model model, HttpServletRequest request) {
         if (request.getSession(false) != null) {
@@ -175,7 +188,6 @@ public class HomePageController {
             User tempUser = userRepository.getById(returnPost.getUserId());
             returnPost.setUserName(tempUser.getUsername());
             returnPost.setVoteCount(voteRepository.countVotesByPostId(returnPost.getId()));
-
 
             List<Comment> commentList = commentRepository.findAllCommentsByPostId(returnPost.getId());
 
