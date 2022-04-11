@@ -7,7 +7,8 @@ Just Tech News is a full-stack web application for developers to use as a tech o
 I refactored an existing web application to use Java, Spring and Thymeleaf. The purpose was for me to learn how to create an RESTFUL API using Java and Spring, and then making that into a full-stack app by rendering the data on the front-end using thymeleaf. This application was developed using the MVC architectural paradigm.  
 
 ![Gif](https://github.com/akelstrom/tech-news-java-api/blob/master/src/main/resources/Homepage%20-%20Just%20Tech%20News.gif)
-Visit Just-tech-news: [https://just-tech-news-java.herokuapp.com/]
+
+![Visit Just-Tech-News] [https://just-tech-news-java.herokuapp.com/]
 
 ## Table of Contents
 1. Description/purpose
