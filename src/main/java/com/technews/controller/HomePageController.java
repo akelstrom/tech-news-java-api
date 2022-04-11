@@ -53,8 +53,6 @@ public class HomePageController {
         if(request.getSession(false) != null) {
             sessionUser = (User) request.getSession().getAttribute("SESSION_USER");
             model.addAttribute("loggedIn", sessionUser.isLoggedIn());
-        } else {
-            model.addAttribute("loggedIn", false);
         }
 
         List<Post> postList = postRepository.findAll();
